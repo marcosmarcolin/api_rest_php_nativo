@@ -26,9 +26,29 @@ Criar o banco webservice e importar o script script_banco.sql
 * Bearer Authentication
 * Métodos GET, PUT, POST e DELETE
 
+### Rotas
+
+* **GET**
+
+* /usuarios/listar
+
+* /usuarios/listar/{id}
+
+* **DELETE**
+
+* /usuarios/deletar/{id}
+
+* **POST**
+
+* /usuarios/cadastrar
+
+* **PUT**
+
+* /usuarios/atualizar/{id}
+
 ### Autor
 
-Marcos Marcolin
+**Marcos Marcolin**
 
 LinkedIn: https://www.linkedin.com/in/marcosmarcolin/
 
