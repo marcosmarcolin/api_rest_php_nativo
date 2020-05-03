@@ -14,26 +14,18 @@ class RequestValidator
     private array $dadosRequest;
     private object $TokensAutorizadosRepository;
 
+    const GET = 'GET';
+    const DELETE = 'DELETE';
+    const USUARIOS = 'USUARIOS';
+
     /**
      * RequestValidator constructor.
+     * @param array $request
      */
-    public function __construct()
+    public function __construct($request = [])
     {
         $this->TokensAutorizadosRepository = new TokensAutorizadosRepository();
-    }
-
-    /**
-     * Tratar Request
-     */
-    public function tratarRequest(): void
-    {
-        $uri = str_replace('/' . DIR_PROJETO, '', $_SERVER['REQUEST_URI']);
-        $urls = explode('/', trim($uri, '/'));
-
-        $this->request['rota'] = strtoupper($urls[0]);
-        $this->request['recurso'] = $urls[1] ?? null;
-        $this->request['id'] = $urls[2] ?? null;
-        $this->request['metodo'] = $_SERVER['REQUEST_METHOD'];
+        $this->request = $request;
     }
 
     /**
@@ -54,7 +46,7 @@ class RequestValidator
      */
     private function direcionarRequest()
     {
-        if ($this->request['metodo'] !== 'GET' && $this->request['metodo'] !== 'DELETE') {
+        if ($this->request['metodo'] !== self::GET && $this->request['metodo'] !== self::DELETE) {
             $this->dadosRequest = JsonUtil::tratarCorpoRequisicaoJson();
         }
         $this->TokensAutorizadosRepository->validarToken(getallheaders()['Authorization']);
@@ -71,7 +63,7 @@ class RequestValidator
         $retorno = utf8_encode(ConstantesGenericasUtil::MSG_ERRO_TIPO_ROTA);
         if (in_array($this->request['rota'], ConstantesGenericasUtil::TIPO_DELETE, true)) {
             switch ($this->request['rota']) {
-                case 'USUARIOS':
+                case self::USUARIOS:
                     $UsuariosService = new UsuariosService($this->request);
                     $retorno = $UsuariosService->validarDelete();
                     break;
@@ -91,7 +83,7 @@ class RequestValidator
         $retorno = utf8_encode(ConstantesGenericasUtil::MSG_ERRO_TIPO_ROTA);
         if (in_array($this->request['rota'], ConstantesGenericasUtil::TIPO_GET, true)) {
             switch ($this->request['rota']) {
-                case 'USUARIOS':
+                case self::USUARIOS:
                     $UsuariosService = new UsuariosService($this->request);
                     $retorno = $UsuariosService->validarGet();
                     break;
@@ -111,7 +103,7 @@ class RequestValidator
         $retorno = null;
         if (in_array($this->request['rota'], ConstantesGenericasUtil::TIPO_POST, true)) {
             switch ($this->request['rota']) {
-                case 'USUARIOS':
+                case self::USUARIOS:
                     $UsuariosService = new UsuariosService($this->request);
                     $UsuariosService->setDadosCorpoRequest($this->dadosRequest);
                     $retorno = $UsuariosService->validarPost();
@@ -133,7 +125,7 @@ class RequestValidator
         $retorno = null;
         if (in_array($this->request['rota'], ConstantesGenericasUtil::TIPO_PUT, true)) {
             switch ($this->request['rota']) {
-                case 'USUARIOS':
+                case self::USUARIOS:
                     $UsuariosService = new UsuariosService($this->request);
                     $UsuariosService->setDadosCorpoRequest($this->dadosRequest);
                     $retorno = $UsuariosService->validarPut();
