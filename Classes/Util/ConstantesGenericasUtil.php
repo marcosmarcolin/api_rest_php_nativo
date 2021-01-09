@@ -22,8 +22,8 @@ abstract class ConstantesGenericasUtil
     public const MSG_ERR0_JSON_VAZIO = 'O Corpo da requisição não pode ser vazio!';
 
     /* SUCESSO */
-    public const MSG_DELETADO_SUCESSO = 'Registrado deletado com Sucesso!';
-    public const MSG_ATUALIZADO_SUCESSO = 'Registrado atualizado com Sucesso!';
+    public const MSG_DELETADO_SUCESSO = 'Registro deletado com Sucesso!';
+    public const MSG_ATUALIZADO_SUCESSO = 'Registro atualizado com Sucesso!';
 
     /* RECURSO USUARIOS */
     public const MSG_ERRO_ID_OBRIGATORIO = 'ID é obrigatório!';

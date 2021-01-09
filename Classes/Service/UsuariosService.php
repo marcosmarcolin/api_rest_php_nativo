@@ -95,7 +95,6 @@ class UsuariosService
         return $retorno;
     }
 
-
     /**
      * @return mixed
      */
@@ -161,6 +160,8 @@ class UsuariosService
                 $this->UsuariosRepository->getMySQL()->getDb()->commit();
                 return ['id_inserido' => $idInserido];
             }
+
+            $this->UsuariosRepository->getMySQL()->getDb()->rollBack();
 
             throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_GENERICO);
         }
